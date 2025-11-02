@@ -33,27 +33,8 @@ const config: HardhatUserConfig = {
     excludeContracts: [],
   },
   networks: {
-    hardhat: {
-      accounts: {
-        mnemonic: MNEMONIC,
-      },
-      chainId: 31337,
-    },
-    anvil: {
-      accounts: {
-        mnemonic: MNEMONIC,
-        path: "m/44'/60'/0'/0/",
-        count: 10,
-      },
-      chainId: 31337,
-      url: "http://localhost:8545",
-    },
     sepolia: {
-      accounts: {
-        mnemonic: MNEMONIC,
-        path: "m/44'/60'/0'/0/",
-        count: 10,
-      },
+      accounts: [MNEMONIC],
       chainId: 11155111,
       url: `https://sepolia.infura.io/v3/${INFURA_API_KEY}`,
     },
