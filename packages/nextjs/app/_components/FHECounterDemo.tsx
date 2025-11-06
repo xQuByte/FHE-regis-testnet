@@ -28,7 +28,9 @@ export const FHECounterDemo = () => {
     return (window as any).ethereum;
   }, []);
 
-  const initialMockChains = { 11155111: "https://eth-sepolia.g.alchemy.com/v2/3ngecjoRNYwdMlsWw_Omc" };
+  const initialMockChains = {
+    11155111: `https://eth-sepolia.g.alchemy.com/v2/${process.env.NEXT_PUBLIC_ALCHEMY_API_KEY}`,
+  };
 
   const {
     instance: fhevmInstance,
