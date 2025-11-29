@@ -37,7 +37,7 @@ export const DappWrapperWithProviders = ({ children }: { children: React.ReactNo
           theme={mounted ? (isDarkMode ? darkTheme() : lightTheme()) : lightTheme()}
         >
           <ProgressBar height="3px" color="#2299dd" />
-          <div className={`flex flex-col min-h-screen`}>
+          <div className={`bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900  flex flex-col min-h-screen`}>
             <Header />
             <main className="relative flex flex-col flex-1">
               <InMemoryStorageProvider>{children}</InMemoryStorageProvider>

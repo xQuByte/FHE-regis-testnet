@@ -6,33 +6,21 @@ import { GenericContractsDeclaration } from "~~/utils/helper/contract";
 
 const deployedContracts = {
   11155111: {
-    FHECounter: {
-      address: "0xead137D42d2E6A6a30166EaEf97deBA1C3D1954e",
+    FHERegisTestnet: {
+      address: "0x101F4d787A81C11DcC0cd7C2322F87dAe46eb353",
       abi: [
         {
           inputs: [
             {
-              internalType: "externalEuint32",
-              name: "inputEuint32",
-              type: "bytes32",
-            },
-            {
-              internalType: "bytes",
-              name: "inputProof",
-              type: "bytes",
+              internalType: "address",
+              name: "user",
+              type: "address",
             },
           ],
-          name: "decrement",
-          outputs: [],
-          stateMutability: "nonpayable",
-          type: "function",
-        },
-        {
-          inputs: [],
-          name: "getCount",
+          name: "encryptedEmailOf",
           outputs: [
             {
-              internalType: "euint32",
+              internalType: "euint256",
               name: "",
               type: "bytes32",
             },
@@ -41,21 +29,35 @@ const deployedContracts = {
           type: "function",
         },
         {
-          inputs: [
+          inputs: [],
+          name: "getTotalRegistered",
+          outputs: [
             {
-              internalType: "externalEuint32",
-              name: "inputEuint32",
-              type: "bytes32",
-            },
-            {
-              internalType: "bytes",
-              name: "inputProof",
-              type: "bytes",
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
             },
           ],
-          name: "increment",
-          outputs: [],
-          stateMutability: "nonpayable",
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "user",
+              type: "address",
+            },
+          ],
+          name: "hasRegistered",
+          outputs: [
+            {
+              internalType: "bool",
+              name: "",
+              type: "bool",
+            },
+          ],
+          stateMutability: "view",
           type: "function",
         },
         {
@@ -69,6 +71,141 @@ const deployedContracts = {
             },
           ],
           stateMutability: "pure",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "externalEuint256",
+              name: "encryptedEmail",
+              type: "bytes32",
+            },
+            {
+              internalType: "bytes",
+              name: "zkProof",
+              type: "bytes",
+            },
+          ],
+          name: "registerEmail",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "totalRegistered",
+          outputs: [
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+      ],
+      inheritedFunctions: {},
+      deployedOnBlock: 9368216,
+    },
+  },
+  31337: {
+    FHERegisTestnet: {
+      address: "0x2279B7A0a67DB372996a5FaB50D91eAA73d2eBe6",
+      abi: [
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "user",
+              type: "address",
+            },
+          ],
+          name: "encryptedEmailOf",
+          outputs: [
+            {
+              internalType: "euint256",
+              name: "",
+              type: "bytes32",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "getTotalRegistered",
+          outputs: [
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "user",
+              type: "address",
+            },
+          ],
+          name: "hasRegistered",
+          outputs: [
+            {
+              internalType: "bool",
+              name: "",
+              type: "bool",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "protocolId",
+          outputs: [
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+          ],
+          stateMutability: "pure",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "externalEuint256",
+              name: "encryptedEmail",
+              type: "bytes32",
+            },
+            {
+              internalType: "bytes",
+              name: "zkProof",
+              type: "bytes",
+            },
+          ],
+          name: "registerEmail",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "totalRegistered",
+          outputs: [
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+          ],
+          stateMutability: "view",
           type: "function",
         },
       ],
