@@ -1,19 +1,29 @@
-# FHEVM React Template
+# FHERegisTestnet -- Testnet Email Registration (React + FHEVM)
 
-A minimal React frontend template for building FHEVM-enabled decentralized applications (dApps). This template provides a simple development interface for interacting with FHEVM smart contracts, specifically the `FHECounter.sol` contract.
+This project provides a secure and private email registration flow for a
+testnet using **Fully Homomorphic Encryption (FHE)** via the **Zama
+FHEVM SDK**.
 
-## 🚀 What is FHEVM?
+## 🚀 Features
 
-FHEVM (Fully Homomorphic Encryption Virtual Machine) enables computation on encrypted data directly on Ethereum. This template demonstrates how to build dApps that can perform computations while keeping data private.
+-   🔐 Register your email privately using FHE encryption\
+-   📧 Users can submit their email **only once**\
+-   🔓 Decrypt your own email (client-only, secure)\
+-   🌀 Loading UI animations with `react-spinners`\
+-   🎨 Smooth transitions with `framer-motion`\
+-   🦄 Wallet connection via `wagmi` + RainbowKit
 
-## ✨ Features
+------------------------------------------------------------------------
 
-- **🔐 FHEVM Integration**: Built-in support for fully homomorphic encryption
-- **⚛️ React + Next.js**: Modern, performant frontend framework
-- **🎨 Tailwind CSS**: Utility-first styling for rapid UI development
-- **🔗 RainbowKit**: Seamless wallet connection and management
-- **🌐 Multi-Network Support**: Works on both Sepolia testnet and local Hardhat node
-- **📦 Monorepo Structure**: Organized packages for SDK, contracts, and frontend
+## 🛠 Tech Stack
+
+-   **Next.js / React**
+-   **wagmi** & **RainbowKit** (Wallet connection)
+-   **@fhevm-sdk** (FHE encryption/decryption)
+-   **framer-motion**
+-   **react-spinners**
+
+------------------------------------------------------------------------
 
 ## 📋 Prerequinextjss
 
@@ -31,7 +41,7 @@ Before you begin, ensure you have:
 ```bash
 # Clone the repository
 git clone <repository-url>
-cd fhevm-react-template
+cd regis-testnet
 
 # Initialize submodules (includes fhevm-hardhat-template)
 git submodule update --init --recursive
@@ -124,7 +134,7 @@ For more details, see the [MetaMask development guide](https://docs.metamask.io/
 This template uses a monorepo structure with three main packages:
 
 ```
-fhevm-react-template/
+regis-testnet/
 ├── packages/
 │   ├── fhevm-hardhat-template/    # Smart contracts & deployment
 │   ├── fhevm-sdk/                 # FHEVM SDK package
@@ -134,8 +144,8 @@ fhevm-react-template/
 
 ### Key Components
 
-#### 🔗 FHEVM Integration (`packages/nextjs/hooks/fhecounter-example/`)
-- **`useFHECounterWagmi.tsx`**: Example hook demonstrating FHEVM contract interaction
+#### 🔗 FHEVM Integration (`packages/nextjs/hooks`)
+- **`useFHERegisTestnetWagmi.ts`**: Example hook demonstrating FHEVM contract interaction
 - Essential hooks for FHEVM-enabled smart contract communication
 - Easily copyable to any FHEVM + React project
 
