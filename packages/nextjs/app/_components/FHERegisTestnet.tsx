@@ -3,7 +3,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { useFhevm } from "@fhevm-sdk";
 import { AnimatePresence, motion } from "framer-motion";
-import ClockLoader from "react-spinners/ClockLoader";
+import HashLoader from "react-spinners/HashLoader";
 import { useAccount } from "wagmi";
 import { RainbowKitCustomConnectButton } from "~~/components/helper/RainbowKitCustomConnectButton";
 import { useFHERegisTestnetWagmi } from "~~/hooks/useFHERegisTestnetWagmi";
@@ -33,7 +33,6 @@ export const FHERegisTestnet = () => {
 
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-  // Nếu trước đó đã submit rồi (isRegistered) thì set submitted = true
   useEffect(() => {
     if (regisTestnet.isRegistered) {
       setSubmitted(true);
@@ -90,7 +89,7 @@ export const FHERegisTestnet = () => {
     <div className="min-h-[calc(100vh-60px)] w-full flex items-center justify-center p-6">
       {regisTestnet.isProcessing && (
         <div className="fixed inset-0 flex items-center justify-center bg-black/50 z-50">
-          <ClockLoader color="#00ffd5" size={50} />
+          <HashLoader color="#00ffd5" size={50} />
         </div>
       )}
 

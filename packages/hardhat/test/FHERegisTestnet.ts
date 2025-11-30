@@ -39,12 +39,15 @@ describe("FHERegisTestnet", function () {
     ({ contract, contractAddress } = await deployFixture());
   });
 
-  // ===== Basic Tests =====
+  // ============================
+  // ===== BASIC FUNCTIONALITY ==
+  // ============================
+
   it("should start with totalRegistered = 0", async function () {
     expect(await contract.getTotalRegistered()).to.eq(0);
   });
 
-  it("should allow a user to register an encrypted email", async function () {
+  it("should allow a user to register an encrypted email once", async function () {
     const email1 = 123456789n;
 
     const encryptedEmail = await fhevm
@@ -68,30 +71,20 @@ describe("FHERegisTestnet", function () {
     expect(decrypted).to.eq(email1);
   });
 
-  it("should allow updating (re-registering) email without incrementing totalRegistered", async function () {
+  it("should revert when user tries to register again", async function () {
     const email1 = 1111n;
-    const email2 = 2222n;
+    const encrypted1 = await fhevm
+      .createEncryptedInput(contractAddress, signers.alice.address)
+      .add256(email1)
+      .encrypt();
 
-    // First time registration
-    const enc1 = await fhevm.createEncryptedInput(contractAddress, signers.alice.address).add256(email1).encrypt();
+    // First time → OK
+    await contract.connect(signers.alice).registerEmail(encrypted1.handles[0], encrypted1.inputProof);
 
-    await (await contract.connect(signers.alice).registerEmail(enc1.handles[0], enc1.inputProof)).wait();
-
-    // Second time update
-    const enc2 = await fhevm.createEncryptedInput(contractAddress, signers.alice.address).add256(email2).encrypt();
-
-    await (await contract.connect(signers.alice).registerEmail(enc2.handles[0], enc2.inputProof)).wait();
-
-    expect(await contract.getTotalRegistered()).to.eq(1);
-
-    const decrypted = await fhevm.userDecryptEuint(
-      FhevmType.euint256,
-      await contract.encryptedEmailOf(signers.alice.address),
-      contractAddress,
-      signers.alice,
-    );
-
-    expect(decrypted).to.eq(email2);
+    // Second attempt → Revert
+    await expect(
+      contract.connect(signers.alice).registerEmail(encrypted1.handles[0], encrypted1.inputProof),
+    ).to.be.revertedWith("Already registered");
   });
 
   it("should allow multiple users to register independently", async function () {
@@ -102,10 +95,11 @@ describe("FHERegisTestnet", function () {
       .createEncryptedInput(contractAddress, signers.alice.address)
       .add256(aliceEmail)
       .encrypt();
+
     const bobEnc = await fhevm.createEncryptedInput(contractAddress, signers.bob.address).add256(bobEmail).encrypt();
 
-    await (await contract.connect(signers.alice).registerEmail(aliceEnc.handles[0], aliceEnc.inputProof)).wait();
-    await (await contract.connect(signers.bob).registerEmail(bobEnc.handles[0], bobEnc.inputProof)).wait();
+    await contract.connect(signers.alice).registerEmail(aliceEnc.handles[0], aliceEnc.inputProof);
+    await contract.connect(signers.bob).registerEmail(bobEnc.handles[0], bobEnc.inputProof);
 
     expect(await contract.getTotalRegistered()).to.eq(2);
 
@@ -131,14 +125,14 @@ describe("FHERegisTestnet", function () {
     expect(email).to.eq(ethers.ZeroHash);
   });
 
-  it("should handle multiple registrations in sequence", async function () {
+  it("should correctly count registrations when multiple users register", async function () {
     const users = [signers.deployer, signers.alice, signers.bob];
-    const emails = [123n, 456n, 789n];
+    const emails = [111n, 222n, 333n];
 
     for (let i = 0; i < users.length; i++) {
       const enc = await fhevm.createEncryptedInput(contractAddress, users[i].address).add256(emails[i]).encrypt();
 
-      await (await contract.connect(users[i]).registerEmail(enc.handles[0], enc.inputProof)).wait();
+      await contract.connect(users[i]).registerEmail(enc.handles[0], enc.inputProof);
     }
 
     expect(await contract.getTotalRegistered()).to.eq(3);
@@ -152,30 +146,5 @@ describe("FHERegisTestnet", function () {
       );
       expect(dec).to.eq(emails[i]);
     }
-  });
-
-  it("should allow changing email multiple times", async function () {
-    const step1 = 111n;
-    const step2 = 222n;
-    const step3 = 333n;
-
-    const enc1 = await fhevm.createEncryptedInput(contractAddress, signers.alice.address).add256(step1).encrypt();
-    await (await contract.connect(signers.alice).registerEmail(enc1.handles[0], enc1.inputProof)).wait();
-
-    const enc2 = await fhevm.createEncryptedInput(contractAddress, signers.alice.address).add256(step2).encrypt();
-    await (await contract.connect(signers.alice).registerEmail(enc2.handles[0], enc2.inputProof)).wait();
-
-    const enc3 = await fhevm.createEncryptedInput(contractAddress, signers.alice.address).add256(step3).encrypt();
-    await (await contract.connect(signers.alice).registerEmail(enc3.handles[0], enc3.inputProof)).wait();
-
-    const finalDec = await fhevm.userDecryptEuint(
-      FhevmType.euint256,
-      await contract.encryptedEmailOf(signers.alice.address),
-      contractAddress,
-      signers.alice,
-    );
-
-    expect(finalDec).to.eq(step3);
-    expect(await contract.getTotalRegistered()).to.eq(1);
   });
 });

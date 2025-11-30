@@ -23,14 +23,18 @@ import type {
 export interface FHERegisTestnetInterface extends Interface {
   getFunction(
     nameOrSignature:
+      | "confidentialProtocolId"
       | "encryptedEmailOf"
       | "getTotalRegistered"
       | "hasRegistered"
-      | "protocolId"
       | "registerEmail"
       | "totalRegistered"
   ): FunctionFragment;
 
+  encodeFunctionData(
+    functionFragment: "confidentialProtocolId",
+    values?: undefined
+  ): string;
   encodeFunctionData(
     functionFragment: "encryptedEmailOf",
     values: [AddressLike]
@@ -42,10 +46,6 @@ export interface FHERegisTestnetInterface extends Interface {
   encodeFunctionData(
     functionFragment: "hasRegistered",
     values: [AddressLike]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "protocolId",
-    values?: undefined
   ): string;
   encodeFunctionData(
     functionFragment: "registerEmail",
@@ -57,6 +57,10 @@ export interface FHERegisTestnetInterface extends Interface {
   ): string;
 
   decodeFunctionResult(
+    functionFragment: "confidentialProtocolId",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
     functionFragment: "encryptedEmailOf",
     data: BytesLike
   ): Result;
@@ -68,7 +72,6 @@ export interface FHERegisTestnetInterface extends Interface {
     functionFragment: "hasRegistered",
     data: BytesLike
   ): Result;
-  decodeFunctionResult(functionFragment: "protocolId", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "registerEmail",
     data: BytesLike
@@ -122,13 +125,13 @@ export interface FHERegisTestnet extends BaseContract {
     event?: TCEvent
   ): Promise<this>;
 
+  confidentialProtocolId: TypedContractMethod<[], [bigint], "view">;
+
   encryptedEmailOf: TypedContractMethod<[user: AddressLike], [string], "view">;
 
   getTotalRegistered: TypedContractMethod<[], [bigint], "view">;
 
   hasRegistered: TypedContractMethod<[user: AddressLike], [boolean], "view">;
-
-  protocolId: TypedContractMethod<[], [bigint], "view">;
 
   registerEmail: TypedContractMethod<
     [encryptedEmail: BytesLike, zkProof: BytesLike],
@@ -143,6 +146,9 @@ export interface FHERegisTestnet extends BaseContract {
   ): T;
 
   getFunction(
+    nameOrSignature: "confidentialProtocolId"
+  ): TypedContractMethod<[], [bigint], "view">;
+  getFunction(
     nameOrSignature: "encryptedEmailOf"
   ): TypedContractMethod<[user: AddressLike], [string], "view">;
   getFunction(
@@ -151,9 +157,6 @@ export interface FHERegisTestnet extends BaseContract {
   getFunction(
     nameOrSignature: "hasRegistered"
   ): TypedContractMethod<[user: AddressLike], [boolean], "view">;
-  getFunction(
-    nameOrSignature: "protocolId"
-  ): TypedContractMethod<[], [bigint], "view">;
   getFunction(
     nameOrSignature: "registerEmail"
   ): TypedContractMethod<

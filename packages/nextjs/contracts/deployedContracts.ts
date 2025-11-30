@@ -7,8 +7,26 @@ import { GenericContractsDeclaration } from "~~/utils/helper/contract";
 const deployedContracts = {
   11155111: {
     FHERegisTestnet: {
-      address: "0x101F4d787A81C11DcC0cd7C2322F87dAe46eb353",
+      address: "0x6B4E9C38056cEE2FF2867B76880136256e8d7478",
       abi: [
+        {
+          inputs: [],
+          name: "ZamaProtocolUnsupported",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "confidentialProtocolId",
+          outputs: [
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
         {
           inputs: [
             {
@@ -58,123 +76,6 @@ const deployedContracts = {
             },
           ],
           stateMutability: "view",
-          type: "function",
-        },
-        {
-          inputs: [],
-          name: "protocolId",
-          outputs: [
-            {
-              internalType: "uint256",
-              name: "",
-              type: "uint256",
-            },
-          ],
-          stateMutability: "pure",
-          type: "function",
-        },
-        {
-          inputs: [
-            {
-              internalType: "externalEuint256",
-              name: "encryptedEmail",
-              type: "bytes32",
-            },
-            {
-              internalType: "bytes",
-              name: "zkProof",
-              type: "bytes",
-            },
-          ],
-          name: "registerEmail",
-          outputs: [],
-          stateMutability: "nonpayable",
-          type: "function",
-        },
-        {
-          inputs: [],
-          name: "totalRegistered",
-          outputs: [
-            {
-              internalType: "uint256",
-              name: "",
-              type: "uint256",
-            },
-          ],
-          stateMutability: "view",
-          type: "function",
-        },
-      ],
-      inheritedFunctions: {},
-      deployedOnBlock: 9368216,
-    },
-  },
-  31337: {
-    FHERegisTestnet: {
-      address: "0x2279B7A0a67DB372996a5FaB50D91eAA73d2eBe6",
-      abi: [
-        {
-          inputs: [
-            {
-              internalType: "address",
-              name: "user",
-              type: "address",
-            },
-          ],
-          name: "encryptedEmailOf",
-          outputs: [
-            {
-              internalType: "euint256",
-              name: "",
-              type: "bytes32",
-            },
-          ],
-          stateMutability: "view",
-          type: "function",
-        },
-        {
-          inputs: [],
-          name: "getTotalRegistered",
-          outputs: [
-            {
-              internalType: "uint256",
-              name: "",
-              type: "uint256",
-            },
-          ],
-          stateMutability: "view",
-          type: "function",
-        },
-        {
-          inputs: [
-            {
-              internalType: "address",
-              name: "user",
-              type: "address",
-            },
-          ],
-          name: "hasRegistered",
-          outputs: [
-            {
-              internalType: "bool",
-              name: "",
-              type: "bool",
-            },
-          ],
-          stateMutability: "view",
-          type: "function",
-        },
-        {
-          inputs: [],
-          name: "protocolId",
-          outputs: [
-            {
-              internalType: "uint256",
-              name: "",
-              type: "uint256",
-            },
-          ],
-          stateMutability: "pure",
           type: "function",
         },
         {

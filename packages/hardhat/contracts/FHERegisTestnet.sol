@@ -2,14 +2,14 @@
 pragma solidity ^0.8.24;
 
 import {FHE, euint256, externalEuint256} from "@fhevm/solidity/lib/FHE.sol";
-import {SepoliaConfig} from "@fhevm/solidity/config/ZamaConfig.sol";
+import {ZamaEthereumConfig} from "@fhevm/solidity/config/ZamaConfig.sol";
 
 /**
  * @title FHERegisTestnet
  * @dev Stores encrypted emails for testnet registration using FHE.
  *      Users can update their email anytime, while the contract tracks total registrations.
  */
-contract FHERegisTestnet is SepoliaConfig {
+contract FHERegisTestnet is ZamaEthereumConfig {
     /// @dev Stores encrypted emails per user
     mapping(address => euint256) private encryptedEmails;
 
@@ -25,6 +25,7 @@ contract FHERegisTestnet is SepoliaConfig {
      * @param zkProof Zero-knowledge proof for validity
      */
     function registerEmail(externalEuint256 encryptedEmail, bytes calldata zkProof) external {
+        require(!registered[msg.sender], "Already registered");
         bool firstTime = !registered[msg.sender];
 
         // Convert external euint256 to internal
